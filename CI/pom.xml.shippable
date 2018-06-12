@@ -1,4 +1,3 @@
-<!-- for integration tests with Java7 -->
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -7,9 +6,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.openapitools</groupId>
-    <artifactId>openapi-generator-project</artifactId>
+    <artifactId>openapi-generator-shippable-pom</artifactId>
     <packaging>pom</packaging>
-    <name>openapi-generator-project</name>
+    <name>openapi-generator-shippable-pom</name>
     <version>4.0.0-SNAPSHOT</version>
     <url>https://github.com/openapitools/openapi-generator</url>
     <scm>
@@ -17,9 +16,6 @@
         <developerConnection>scm:git:git@github.com:openapitools/openapi-generator.git</developerConnection>
         <url>https://github.com/openapitools/openapi-generator</url>
     </scm>
-    <prerequisites>
-        <maven>2.2.0</maven>
-    </prerequisites>
     <developers>
         <!-- original author of the project -->
         <developer>
@@ -115,7 +111,7 @@
                     <lineEnding>LF</lineEnding>
                 </configuration>
             </plugin>
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.17</version>
@@ -124,8 +120,8 @@
                         <id>validate</id>
                         <phase>validate</phase>
                         <configuration>
-                            <configLocation>google_checkstyle.xml</configLocation>
-                            Don't include generated sources a la http://stackoverflow.com/a/30406454
+                            <configLocation>../google_checkstyle.xml</configLocation>
+                            <!-- Don't include generated sources a la http://stackoverflow.com/a/30406454 -->
                             <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
                             <encoding>UTF-8</encoding>
                             <consoleOutput>true</consoleOutput>
@@ -144,7 +140,7 @@
                         <version>6.19</version>
                     </dependency>
                 </dependencies>
-            </plugin>-->
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -251,6 +247,26 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.4.1</version>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>3.2.5</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -340,7 +356,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/android/volley</module>
+                <module>../samples/client/petstore/android/volley</module>
             </modules>
         </profile>
         <profile>
@@ -352,7 +368,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/bash</module>
+                <module>../samples/client/petstore/bash</module>
             </modules>
         </profile>
         <profile>
@@ -364,7 +380,31 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/clojure</module>
+                <module>../samples/client/petstore/clojure</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>haskell-http-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>haskell-http-client</value>
+                </property>
+            </activation>
+            <modules>
+                <!--<module>../samples/client/petstore/haskell-http-client</module>-->
+            </modules>
+        </profile>
+        <profile>
+            <id>haskell-http-client-integration-test</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>haskell-http-client</value>
+                </property>
+            </activation>
+            <modules>
+                <module>../samples/client/petstore/haskell-http-client/tests-integration</module>
             </modules>
         </profile>
         <profile>
@@ -376,7 +416,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/java/jersey1</module>
+                <module>../samples/client/petstore/java/jersey1</module>
             </modules>
         </profile>
         <profile>
@@ -388,7 +428,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/java/jersey2</module>
+                <module>../samples/client/petstore/java/jersey2</module>
             </modules>
         </profile>
         <profile>
@@ -400,7 +440,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/java/jersey2-java6</module>
+                <module>../samples/client/petstore/java/jersey2-java6</module>
             </modules>
         </profile>
         <profile>
@@ -412,7 +452,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/java/okhttp-gson</module>
+                <module>../samples/client/petstore/java/okhttp-gson</module>
             </modules>
         </profile>
         <profile>
@@ -424,7 +464,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/java/okhttp-gson/parcelableModel</module>
+                <module>../samples/client/petstore/java/okhttp-gson/parcelableModel</module>
             </modules>
         </profile>
         <profile>
@@ -436,7 +476,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/java/retrofit</module>
+                <module>../samples/client/petstore/java/retrofit</module>
             </modules>
         </profile>
         <profile>
@@ -448,7 +488,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/java/retrofit2</module>
+                <module>../samples/client/petstore/java/retrofit2</module>
             </modules>
         </profile>
         <profile>
@@ -460,7 +500,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/java/retrofit2rx</module>
+                <module>../samples/client/petstore/java/retrofit2rx</module>
             </modules>
         </profile>
         <profile>
@@ -472,7 +512,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/java/feign</module>
+                <module>../samples/client/petstore/java/feign</module>
             </modules>
         </profile>
         <profile>
@@ -484,7 +524,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/javascript</module>
+                <module>../samples/client/petstore/javascript</module>
             </modules>
         </profile>
         <profile>
@@ -496,7 +536,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/scala</module>
+                <module>../samples/client/petstore/scala</module>
             </modules>
         </profile>
         <profile>
@@ -508,7 +548,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/java-msf4/</module>
+                <module>../samples/server/petstore/java-msf4/</module>
             </modules>
         </profile>
         <profile>
@@ -520,7 +560,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/jaxrs-cxf</module>
+                <module>../samples/server/petstore/jaxrs-cxf</module>
             </modules>
         </profile>
         <profile>
@@ -532,7 +572,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/jaxrs-resteasy/default</module>
+                <module>../samples/server/petstore/jaxrs-resteasy/default</module>
             </modules>
         </profile>
         <profile>
@@ -544,7 +584,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/jaxrs-resteasy/joda</module>
+                <module>../samples/server/petstore/jaxrs-resteasy/joda</module>
             </modules>
         </profile>
         <profile>
@@ -556,19 +596,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/jaxrs-resteasy/eap</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>jaxrs-resteasy-eap-server-java8</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/server/petstore/jaxrs-resteasy/eap-java8</module>
+                <module>../samples/server/petstore/jaxrs-resteasy/eap</module>
             </modules>
         </profile>
         <profile>
@@ -580,7 +608,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/jaxrs-resteasy/eap-joda</module>
+                <module>../samples/server/petstore/jaxrs-resteasy/eap-joda</module>
             </modules>
         </profile>
         <profile>
@@ -592,7 +620,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/jaxrs/jersey2</module>
+                <module>../samples/server/petstore/jaxrs/jersey2</module>
             </modules>
         </profile>
         <profile>
@@ -604,56 +632,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/jaxrs/jersey1</module>
-            </modules>
-        </profile>
-        <profile>
-            <!-- openapi v3's one -->
-            <id>jaxrs-jersey</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/server/petstore/jaxrs-jersey</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>jaxrs-spec</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/server/petstore/jaxrs-spec</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>jaxrs-spec-interface</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/server/petstore/jaxrs-spec-interface</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>jaxrs-spec-interface-response</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/server/petstore/jaxrs-spec-interface-response</module>
+                <module>../samples/server/petstore/jaxrs/jersey1</module>
             </modules>
         </profile>
         <profile>
@@ -665,7 +644,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/typescript-fetch/tests/default</module>
+                <module>../samples/client/petstore/typescript-fetch/tests/default</module>
             </modules>
         </profile>
         <profile>
@@ -677,7 +656,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/typescript-fetch/builds/default</module>
+                <module>../samples/client/petstore/typescript-fetch/builds/default</module>
             </modules>
         </profile>
         <profile>
@@ -689,7 +668,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/typescript-fetch/builds/es6-target</module>
+                <module>../samples/client/petstore/typescript-fetch/builds/es6-target</module>
             </modules>
         </profile>
         <profile>
@@ -701,7 +680,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/typescript-fetch/builds/with-npm-version</module>
+                <module>../samples/client/petstore/typescript-fetch/builds/with-npm-version</module>
             </modules>
         </profile>
         <profile>
@@ -713,7 +692,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/typescript-angularjs/npm</module>
+                <module>../samples/client/petstore/typescript-angularjs/npm</module>
             </modules>
         </profile>
         <profile>
@@ -725,7 +704,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/typescript-node/npm</module>
+                <module>../samples/client/petstore/typescript-node/npm</module>
             </modules>
         </profile>
         <profile>
@@ -737,7 +716,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/python</module>
+                <module>../samples/client/petstore/python</module>
             </modules>
         </profile>
         <profile>
@@ -749,7 +728,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/ruby</module>
+                <module>../samples/client/petstore/ruby</module>
             </modules>
         </profile>
         <profile>
@@ -761,7 +740,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/go</module>
+                <module>../samples/client/petstore/go</module>
             </modules>
         </profile>
         <profile>
@@ -773,19 +752,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/spring-mvc</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>springboot-useoptional</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/server/petstore/springboot-useoptional</module>
+                <module>../samples/server/petstore/spring-mvc</module>
             </modules>
         </profile>
         <profile>
@@ -797,7 +764,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/springboot-beanvalidation</module>
+                <module>../samples/server/petstore/springboot-beanvalidation</module>
             </modules>
         </profile>
         <profile>
@@ -809,7 +776,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/springboot-reactive</module>
+                <module>../samples/server/petstore/springboot-reactive</module>
             </modules>
         </profile>
         <profile>
@@ -821,7 +788,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/springboot</module>
+                <module>../samples/server/petstore/springboot</module>
             </modules>
         </profile>
         <profile>
@@ -833,7 +800,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/spring-cloud</module>
+                <module>../samples/client/petstore/spring-cloud</module>
             </modules>
         </profile>
         <profile>
@@ -845,7 +812,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/scalatra</module>
+                <module>../samples/server/petstore/scalatra</module>
             </modules>
         </profile>
         <profile>
@@ -857,7 +824,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/java-inflector</module>
+                <module>../samples/server/petstore/java-inflector</module>
             </modules>
         </profile>
         <profile>
@@ -869,7 +836,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/undertow</module>
+                <module>../samples/server/petstore/undertow</module>
             </modules>
         </profile>
         <profile>
@@ -882,61 +849,16 @@
             </activation>
             <modules>
                 <!-- clients -->
-                <!-- test java-related projects -->
-                <module>samples/client/petstore/scala-akka</module>
-                <module>samples/client/petstore/scala-httpclient</module>
-                <module>samples/client/petstore/scalaz</module>
-                <module>samples/client/petstore/clojure</module>
-                <module>samples/client/petstore/java/feign</module>
-                <module>samples/client/petstore/java/jersey1</module>
-                <module>samples/client/petstore/java/jersey2</module>
-                <module>samples/client/petstore/java/okhttp-gson</module>
-                <module>samples/client/petstore/java/retrofit</module>
-                <module>samples/client/petstore/java/retrofit2</module>
-                <module>samples/client/petstore/java/retrofit2rx</module>
-                <module>samples/client/petstore/jaxrs-cxf-client</module>
-                <module>samples/client/petstore/java/resttemplate</module>
-                <module>samples/client/petstore/java/resttemplate-withXml</module>
-                <module>samples/client/petstore/java/vertx</module>
-                <module>samples/client/petstore/java/resteasy</module>
-                <module>samples/client/petstore/java/google-api-client</module>
-                <module>samples/client/petstore/kotlin/</module>
+                <module>../samples/client/petstore/elixir</module>
+                <!--<module>../samples/client/petstore/haskell-http-client</module>-->
+                <module>../samples/client/petstore/erlang-client</module>
                 <!-- servers -->
-                <module>samples/server/petstore/jaxrs-jersey</module>
-                <module>samples/server/petstore/jaxrs-spec</module>
-                <module>samples/server/petstore/jaxrs-spec-interface</module>
-                <module>samples/server/petstore/jaxrs-spec-interface-response</module>
-                <module>samples/server/petstore/java-vertx/rx</module>
-                <module>samples/server/petstore/java-vertx/async</module>
-                <module>samples/server/petstore/java-inflector</module>
-                <module>samples/server/petstore/undertow</module>
-                <module>samples/server/petstore/jaxrs/jersey1</module>
-                <module>samples/server/petstore/jaxrs/jersey2</module>
-                <module>samples/server/petstore/jaxrs/jersey1-useTags</module>
-                <module>samples/server/petstore/jaxrs/jersey2-useTags</module>
-                <module>samples/server/petstore/jaxrs-resteasy/default</module>
-                <module>samples/server/petstore/jaxrs-resteasy/eap</module>
-                <module>samples/server/petstore/jaxrs-resteasy/eap-joda</module>
-                <module>samples/server/petstore/jaxrs-resteasy/eap-java8</module>
-                <module>samples/server/petstore/jaxrs-resteasy/joda</module>
-                <module>samples/server/petstore/spring-mvc</module>
-                <module>samples/client/petstore/spring-cloud</module>
-                <module>samples/server/petstore/springboot</module>
-                <module>samples/server/petstore/springboot-beanvalidation</module>
-                <module>samples/server/petstore/springboot-useoptional</module>
-                <module>samples/server/petstore/jaxrs-cxf</module>
-                <module>samples/server/petstore/jaxrs-cxf-annotated-base-path</module>
-                <module>samples/server/petstore/jaxrs-cxf-cdi</module>
-                <module>samples/server/petstore/jaxrs-cxf-non-spring-app</module>
-                <module>samples/server/petstore/java-msf4j</module>
+                <module>../samples/server/petstore/erlang-server</module>
             </modules>
         </profile>
     </profiles>
     <modules>
-        <module>modules/openapi-generator</module>
-        <module>modules/openapi-generator-cli</module>
-        <module>modules/openapi-generator-maven-plugin</module>
-        <module>modules/openapi-generator-online</module>
+        <module>../</module>
     </modules>
     <reporting>
         <outputDirectory>target/site</outputDirectory>
@@ -1000,7 +922,7 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-parser-version>2.0.2-OpenAPITools.org-1</swagger-parser-version>
+        <swagger-parser-version>2.0.1</swagger-parser-version>
         <swagger-core-version>2.0.1</swagger-core-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
