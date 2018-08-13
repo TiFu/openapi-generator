@@ -1,32 +1,19 @@
-// TOOD: generate server config for each configuration 
+import {RequestContext, HttpMethod} from './http/http';
 
-export class ServerConfiguration<T extends string> {
-	private variables: { [key in T]: string };
+export class ServerConfiguration {
 	
-    public constructor(private url: string, private variableNames: T[], defaultValues: { [key in T]: string} ) {
-    	this.variables = <{ [key  in T]: string }> {};
-        for (let key in defaultValues) {
-            if (key in defaultValues) {
-                this.variables[key] = defaultValues[key];
-            }
-        }
+    public constructor(private url: string) {
     }
     
-    public getVariableNames(): T[] {
-        return this.variableNames;
-    }
-
-    public setVariable(variable: T, value: string): void {
-        this.variables[variable] = value;
-    }
+	public makeRequestContext(endpoint: string, httpMethod: HttpMethod): RequestContext {
+		return new RequestContext(this.url + endpoint, httpMethod);		
+	}
 }
 
 {{#openAPI}}
-
+export const servers = [
 	{{#servers}}
-export class 
-	{{#variables:name}}
-		{{name}}
-	{{/variables:name}}
+	new ServerConfiguration("{{url}}"){{^last}},{{/last}}
 	{{/servers}}
+]
 {{/openAPI}}
