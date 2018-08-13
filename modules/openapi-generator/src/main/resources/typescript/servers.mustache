@@ -1,0 +1,32 @@
+// TOOD: generate server config for each configuration 
+
+export class ServerConfiguration<T extends string> {
+	private variables: { [key in T]: string };
+	
+    public constructor(private url: string, private variableNames: T[], defaultValues: { [key in T]: string} ) {
+    	this.variables = <{ [key  in T]: string }> {};
+        for (let key in defaultValues) {
+            if (key in defaultValues) {
+                this.variables[key] = defaultValues[key];
+            }
+        }
+    }
+    
+    public getVariableNames(): T[] {
+        return this.variableNames;
+    }
+
+    public setVariable(variable: T, value: string): void {
+        this.variables[variable] = value;
+    }
+}
+
+{{#openAPI}}
+
+	{{#servers}}
+export class 
+	{{#variables:name}}
+		{{name}}
+	{{/variables:name}}
+	{{/servers}}
+{{/openAPI}}
